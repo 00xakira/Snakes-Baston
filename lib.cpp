@@ -1,47 +1,4 @@
-#include <fstream>
-#include <iostream>
-
-using namespace std;
-
-int HEIGHT;
-int WIDTH;
-
-enum whereIssnake
-{
-    upperleft,
-    upperright,
-    lowerleft,
-    lowerright,
-    uppermiddle,
-    lowermiddle,
-    middleright,
-    middleleft,
-    middle,
-};
-
-typedef struct _wormhole
-{
-    Node *startNode;
-    Node *endNode;
-} Wormhole;
-
-typedef struct _snake
-{
-    Node *head;
-    Node *tail;
-} Snake;
-
-typedef struct _node
-{
-    char verticalCorner;
-    char horizontalCorner;
-    struct _node *upNode;
-    struct _node *downNode;
-    struct _node *leftNode;
-    struct _node *rightNode;
-    Snake *snake;
-    Wormhole *wormhole;
-} Node;
+#include "lib.h"
 
 int isSurrondedByObstacles(Node *node)
 {
