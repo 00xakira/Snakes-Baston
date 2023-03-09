@@ -4,6 +4,10 @@
 using namespace std;
 
 
+int HEIGHT;
+int WIDTH;
+
+
 enum whereIssnake{
     upperleft,
     upperright,
