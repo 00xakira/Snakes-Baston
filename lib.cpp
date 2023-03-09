@@ -1,3 +1,11 @@
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+int HEIGHT;
+int WIDTH;
+
 enum whereIssnake
 {
     upperleft,
@@ -34,9 +42,6 @@ typedef struct _node
     Snake *snake;
     Wormhole *wormhole;
 } Node;
-
-// int HEIGHT;
-// int WIDTH;
 
 int isSurrondedByObstacles(Node *node)
 {
@@ -147,5 +152,22 @@ int AreThereObstaclesArroundsnake(int row, int col, int board[][WIDTH])
             return 1;
         }
         return 0;
+    }
+}
+
+void board()
+{
+
+    FILE *file = NULL;
+    char *inputpath = argv[2];
+    file = fopen(inputpath, "r+");
+    fscanf(file, "%d %d", &HEIGHT, &WIDTH); // scan a board array
+    int board[HEIGHT][WIDTH];               // make a board array
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            fscanf(file, "%d ", &board[y][x]);
+        }
     }
 }

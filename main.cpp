@@ -1,10 +1,8 @@
-#include <iostream>
+#include "lib.h"
 
 
 
-using namespace std;
-
-int main(){
+int main(int argc, char* argv[]){
 
     std:: cout << "hello wolrd" << std::endl;
     return 0;
