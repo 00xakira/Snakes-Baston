@@ -2,17 +2,18 @@
 #include <iostream>
 using namespace std;
 
-enum whereIssnake
+enum VerticalCorner
 {
-    upperleft,
-    upperright,
-    lowerleft,
-    lowerright,
-    uppermiddle,
-    lowermiddle,
-    middleright,
-    middleleft,
-    middle,
+    noCorner = 0,
+    upperCorner = 1,
+    lowerCorner = 2
+};
+
+enum HorizontalCorner
+{
+    noCorner = 0,
+    leftCorner = 1,
+    rightCorner = 2
 };
 
 typedef struct _wormhole
@@ -29,8 +30,9 @@ typedef struct _snake
 
 typedef struct _node
 {
-    char verticalCorner;
-    char horizontalCorner;
+    int weight;
+    HorizontalCorner vCorner;
+    VerticalCorner hCorner;
     struct _node *upNode;
     struct _node *downNode;
     struct _node *leftNode;
@@ -50,4 +52,6 @@ void snake_movement();
 
 int isSurrondedByObstacles(Node *node);
 
-int AreThereObstaclesArroundsnake(int row, int col, int board[][WIDTH]);
+char getExportSymbol(Node *node);
+
+void exportBoard(Node *startNode);

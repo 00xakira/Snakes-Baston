@@ -9,107 +9,54 @@ int isSurrondedByObstacles(Node *node)
     return 0;
 }
 
-// done sccusefully
-int AreThereObstaclesArroundsnake(int row, int col, int board[][WIDTH])
+void exportBoard(Node *startNode)
 {
-    enum whereIssnake where;
-    if (row == 0 && col == 0)
+    Node *currentNode = startNode;
+    char outputPath[32] = "output.txt";
+    FILE *file = NULL;
+    file = fopen(outputPath, "rw+");
+
+    while (currentNode->vCorner != lowerCorner || currentNode->hCorner != rightCorner)
     {
-        where = upperleft;
-    }
-    else if (row == 0 && col == 15)
-    {
-        where = upperright;
-    }
-    else if (row == 15 && col == 0)
-    {
-        where = lowerleft;
-    }
-    else if (row == 15 && col == 15)
-    {
-        where = lowerright;
-    }
-    else if (row > 0 && row < 15 && col == 0)
-    {
-        where = middleleft;
-    }
-    else if (row > 0 && row < 15 && col == 15)
-    {
-        where = middleright;
-    }
-    else if (row == 0 && col > 0 && col < 15)
-    {
-        where = uppermiddle;
-    }
-    else if (row == 15 && col > 0 && col < 15)
-    {
-        where = lowermiddle;
-    }
-    else if (row > 0 && row < 15 && col > 0 && col < 15)
-    {
-        where = middle;
-    }
-    else
-    {
-        return 0;
-    }
-    switch (where)
-    {
-    case upperleft:
-        if (board[0][1] % 10 > 0 && board[1][0] % 10 > 0 && board[1][1] % 10 > 0)
+        while (currentNode->hCorner != rightCorner)
         {
-            return 1;
+
+            fprintf(file, "%c ", getExportSymbol(currentNode));
         }
-        return 0;
-    case upperright:
-        if (board[0][8] % 10 > 0 && board[1][9] % 10 > 0 && board[1][8] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case lowerleft:
-        if (board[8][0] % 10 > 0 && board[9][1] % 10 > 0 && board[8][1] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case lowerright:
-        if (board[8][8] % 10 > 0 && board[8][9] % 10 > 0 && board[9][8] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case uppermiddle:
-        if (board[row + 1][col] % 10 > 0 && board[row + 1][col + 1] % 10 > 0 && board[row][col + 1] % 10 > 0 && board[row][col - 1] % 10 > 0 && board[row + 1][col - 1] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case lowermiddle:
-        if (board[row][col + 1] % 10 > 0 && board[row - 1][col + 1] % 10 > 0 && board[row - 1][col] % 10 > 0 && board[row - 1][col - 1] % 10 > 0 && board[row][col - 1] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case middleleft:
-        if (board[row + 1][col] % 10 > 0 && board[row + 1][col + 1] % 10 > 0 && board[row][col + 1] % 10 > 0 && board[row - 1][col + 1] % 10 > 0 && board[row - 1][col] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case middleright:
-        if (board[row + 1][col] % 10 > 0 && board[row + 1][col - 1] % 10 > 0 && board[row][col - 1] % 10 > 0 && board[row - 1][col - 1] % 10 > 0 && board[row - 1][col] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
-    case middle:
-        if (board[row + 1][col] % 10 > 0 && board[row + 1][col - 1] % 10 > 0 && board[row][col - 1] % 10 > 0 && board[row - 1][col - 1] % 10 > 0 && board[row - 1][col] % 10 > 0 && board[row - 1][col + 1] % 10 > 0 && board[row][col + 1] % 10 > 0 && board[row + 1][col + 1] % 10 > 0)
-        {
-            return 1;
-        }
-        return 0;
+        fprintf(file, "\n");
     }
+    fclose(file);
+}
+
+char getExportSymbol(Node *node)
+{
+
+    if (node->snake)
+    {
+        if (node->snake == node->upNode->snake)
+        {
+            return 'U';
+        }
+        else if (node->snake == node->downNode->snake)
+        {
+            return 'D';
+        }
+        else if (node->snake == node->leftNode->snake)
+        {
+            return 'L';
+        }
+        else if (node->snake == node->rightNode->snake)
+        {
+            return 'R';
+        }
+    }
+
+    if (node->wormhole)
+    {
+        return '*';
+    }
+
+    return node->weight - '0';
 }
 
 void board()
